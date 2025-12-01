@@ -6,7 +6,7 @@ import { errorHandler } from './middlewares/errorHandler.middlewares.js';
 import { requestLogger } from './middlewares/logger.middlewares.js';
 import { configs } from './configs/env.js';
 
-dotenv.configs();
+dotenv.config();
 
 const app = express();
 
@@ -33,8 +33,8 @@ app.use(errorHandler);
 
 const PORT = configs.PORT;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`Environment: ${configs.NODE_ENV}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`📝 Environment: ${configs.NODE_ENV}`);
 });
 
 export default app;

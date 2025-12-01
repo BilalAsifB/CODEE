@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { huggingfaceConfig } from '../config/huggingface.js';
+import { huggingfaceConfig } from '../configs/huggingface.js';
 
 export const callHuggingFaceAPI = async (inputs, params = {}) => {
   const url = `${huggingfaceConfig.apiUrl}/${huggingfaceConfig.modelId}`;

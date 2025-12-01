@@ -1,6 +1,6 @@
 import { callHuggingFaceAPI, parseModelResponse } from './modelService.js';
 import { formatCriticPrompt, extractImprovementsFromResponse } from '../utils/prompts.js';
-import { huggingfaceConfig } from '../config/huggingface.js';
+import { huggingfaceConfig } from '../configs/huggingface.js';
 
 export const improveCode = async (code, originalPrompt) => {
   try {
