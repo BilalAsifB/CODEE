@@ -1,70 +1,161 @@
-# Getting Started with Create React App
+# CODEE Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A **React-based user interface** for the AI Coding Assistant, offering a modern, responsive environment for generating and refining code using the **Qwen 2.5 3B Coder** model.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+* **💻 Modern UI** — Clean, dark-themed interface built with React and custom CSS.
+* **⚡ Real-time Feedback** — Visual status indicators for validation, generation, and criticism stages.
+* **🛡️ Guardrail Alerts** — User-friendly error messages for unsafe or irrelevant prompts.
+* **📝 Code Display** — Formatted code blocks with one-click copy functionality.
+* **📱 Responsive Design** — Optimized layout for both desktop and mobile.
+* **🔄 Code Improvement** — View raw model output and critic-improved code side-by-side.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📦 Prerequisites
 
-### `npm test`
+* **Node.js 16+**
+* **npm or yarn**
+* A running instance of the **Coding Assistant Backend**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🛠️ Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. Navigate to project directory
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+cd codee-frontend
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 2. Install dependencies
 
-### `npm run eject`
+```bash
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 3. Configure environment
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Copy example env:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+cp .env.example .env
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Edit `.env` and set your backend URL:
 
-## Learn More
+```
+REACT_APP_API_BASE_URL=http://localhost:5000/api
+REACT_APP_DEBUG=false
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 4. Run the application
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Development** ([http://localhost:3000](http://localhost:3000)):
 
-### Code Splitting
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Production build**:
 
-### Analyzing the Bundle Size
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 📁 Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+src/
+├── components/
+│   ├── CodingAssistant.jsx   # Main controller component
+│   ├── InputForm.jsx          # Prompt input area
+│   ├── CodeDisplay.jsx        # Renders generated & improved code
+│   ├── StatusIndicator.jsx    # Validation -> Generation -> Critic stages
+│   └── ErrorMessage.jsx       # Guardrail rejection UI
+├── services/
+│   └── api.js                 # Backend HTTP requests
+├── hooks/
+│   ├── useCodeGeneration.js   # State machine for AI generation flow
+│   └── useAsync.js            # Generic async handler
+├── styles/                    # Component-specific CSS
+├── utils/
+│   ├── formatters.js          # Text & code formatting helpers
+│   └── validators.js          # Client-side prompt validators
+└── config/
+    └── api.js                 # API endpoint settings
+```
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🌐 API Integration
 
-### Deployment
+The frontend communicates with backend endpoints defined in `src/config/api.js`:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+| Action          | Endpoint             | Method |
+| --------------- | -------------------- | ------ |
+| Generate code   | `/api/generate-code` | POST   |
+| Validate prompt | `/api/validate`      | POST   |
+| Health check    | `/api/health`        | GET    |
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🔑 Key Components
+
+### **CodingAssistant**
+
+Handles:
+
+* Prompt submission
+* Calling validation + generation + critic endpoints
+* Managing multi-step loading states
+* Showing results or guardrail errors
+
+### **StatusIndicator**
+
+Animated progress through:
+
+1. **Validating**
+2. **Generating**
+3. **Improving**
+
+---
+
+## 🐞 Troubleshooting
+
+### **❌ "Failed to connect to server"**
+
+* Ensure backend is running
+* Confirm `REACT_APP_API_BASE_URL` is correct
+* Check browser console for **CORS** issues
+
+### **🎨 Styling problems**
+
+* Components use CSS modules in `src/styles/`
+* Global styles: `src/index.css`, `src/App.css`
+
+---
+
+## 🚢 Deployment
+
+### **Static Hosting (Netlify, Vercel, GitHub Pages, S3, etc.)**
+
+```bash
+npm run build
+# Deploy the /build folder
+```
+
+### **Docker + Nginx**
+
+Build production assets, then serve via Nginx or any static server.
+
+---
+
+## 📄 License
+
+MIT

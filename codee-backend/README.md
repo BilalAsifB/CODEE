@@ -1,4 +1,4 @@
-# Coding Assistant Backend
+# CODEE Backend
 
 Node.js/Express backend for AI Coding Assistant powered by Qwen 2.5 3B Coder model.
 

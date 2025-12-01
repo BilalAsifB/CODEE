@@ -3,8 +3,8 @@ export const configs = {
   PORT: process.env.PORT || 5000,
   NODE_ENV: process.env.NODE_ENV || 'development',
   LOG_LEVEL: process.env.LOG_LEVEL || 'info',
-  MODEL_ID: 'bilalburney/qwen2.5-3b-coder-alpaca',
-  INFERENCE_API: 'https://api-inference.huggingface.co/models',
+  MODEL_ID: 'bilalburney/qwen2.5-0.5b-coder-alpaca',
+  INFERENCE_API: 'https://osktrlcxwgb3za5u.us-east-1.aws.endpoints.huggingface.cloud',
   REQUEST_TIMEOUT: 120000, // 2 minutes
 };
 

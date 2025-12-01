@@ -2,7 +2,14 @@ import axios from 'axios';
 import { huggingfaceConfig } from '../configs/huggingface.js';
 
 export const callHuggingFaceAPI = async (inputs, params = {}) => {
-  const url = `${huggingfaceConfig.apiUrl}/${huggingfaceConfig.modelId}`;
+  let url;
+  if (huggingfaceConfig.apiUrl.includes('api-inference.huggingface.co')) {
+    url = `${huggingfaceConfig.apiUrl}/${huggingfaceConfig.modelId}`;
+  } else {
+    url = huggingfaceConfig.apiUrl;
+  }
+  console.log('🔗 Calling HF API URL:', url);
+
   const requestBody = {
     inputs,
     parameters: {
