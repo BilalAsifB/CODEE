@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import codeRoutes from './routes/codeRoutes.js';
-import { errorHandler } from './middleware/errorHandler.js';
-import { requestLogger } from './middleware/logger.js';
+import codeRoutes from './routes/codeRoutes.routers.js';
+import { errorHandler } from './middleware/errorHandler.middlewares.js';
+import { requestLogger } from './middleware/logger.middlewares.js';
 import { config } from './config/env.js';
 
 dotenv.config();
@@ -33,8 +33,8 @@ app.use(errorHandler);
 
 const PORT = config.PORT;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📝 Environment: ${config.NODE_ENV}`);
+  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Environment: ${config.NODE_ENV}`);
 });
 
 export default app;

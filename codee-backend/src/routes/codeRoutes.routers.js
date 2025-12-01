@@ -1,6 +1,6 @@
 import express from 'express';
-import { generateCodeHandler, validateHandler } from '../controllers/codeController.js';
-import { validateRequestBody } from '../middleware/validation.js';
+import { generateCodeHandler, validateHandler } from '../controllers/codeContollers.contollers.js';
+import { validateRequestBody } from '../middleware/validation.middlewares.js';
 
 const router = express.Router();
 
