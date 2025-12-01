@@ -2,11 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import codeRoutes from './routes/codeRoutes.routers.js';
-import { errorHandler } from './middleware/errorHandler.middlewares.js';
-import { requestLogger } from './middleware/logger.middlewares.js';
-import { config } from './config/env.js';
+import { errorHandler } from './middlewares/errorHandler.middlewares.js';
+import { requestLogger } from './middlewares/logger.middlewares.js';
+import { configs } from './configs/env.js';
 
-dotenv.config();
+dotenv.configs();
 
 const app = express();
 
@@ -31,10 +31,10 @@ app.use((req, res) => {
 // Global error handler
 app.use(errorHandler);
 
-const PORT = config.PORT;
+const PORT = configs.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`Environment: ${config.NODE_ENV}`);
+  console.log(`Environment: ${configs.NODE_ENV}`);
 });
 
 export default app;

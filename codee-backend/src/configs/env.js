@@ -1,4 +1,4 @@
-export const config = {
+export const configs = {
   HF_TOKEN: process.env.HUGGING_FACE_TOKEN,
   PORT: process.env.PORT || 5000,
   NODE_ENV: process.env.NODE_ENV || 'development',
@@ -9,6 +9,6 @@ export const config = {
 };
 
 // Validate required config
-if (!config.HF_TOKEN) {
+if (!configs.HF_TOKEN) {
   throw new Error('HUGGING_FACE_TOKEN environment variable is required');
 }

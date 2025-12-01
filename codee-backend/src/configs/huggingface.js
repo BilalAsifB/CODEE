@@ -1,11 +1,11 @@
-import { config } from './env.js';
+import { configs } from './env.js';
 
 export const huggingfaceConfig = {
-  apiUrl: config.INFERENCE_API,
-  token: config.HF_TOKEN,
-  modelId: config.MODEL_ID,
+  apiUrl: configs.INFERENCE_API,
+  token: configs.HF_TOKEN,
+  modelId: configs.MODEL_ID,
   headers: {
-    Authorization: `Bearer ${config.HF_TOKEN}`,
+    Authorization: `Bearer ${configs.HF_TOKEN}`,
     'Content-Type': 'application/json',
   },
   generationParams: {
@@ -18,5 +18,5 @@ export const huggingfaceConfig = {
     temperature: 0.5,
     top_p: 0.9,
   },
-  timeout: config.REQUEST_TIMEOUT,
+  timeout: configs.REQUEST_TIMEOUT,
 };
