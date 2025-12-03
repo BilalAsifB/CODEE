@@ -5,7 +5,7 @@ export const configs = {
   LOG_LEVEL: process.env.LOG_LEVEL || 'info',
   MODEL_ID: process.env.MODEL_ID,
   INFERENCE_API: process.env.INFERENCE_API,
-  REQUEST_TIMEOUT: 120000, // 2 minutes
+  REQUEST_TIMEOUT: process.env.REQUEST_TIMEOUT, // 2 minutes
 };
 
 // Validate required config
