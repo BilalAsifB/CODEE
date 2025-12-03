@@ -23,6 +23,11 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// Welcome route
+app.get('/', (req, res) => {
+  res.send('Welcome to the Codee API!');
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
