@@ -1,11 +1,15 @@
-import express from 'express';
-import { generateCodeHandler, validateHandler, quickValidateHandler } from '../controllers/codeContollers.contollers.js';
-import { validateRequestBody } from '../middlewares/validation.middlewares.js';
+import express from "express";
+import {
+  generateCodeHandler,
+  validateHandler,
+  quickValidateHandler,
+} from "../controllers/codeContollers.contollers.js";
+import { validateRequestBody } from "../middlewares/validation.middlewares.js";
 
 const router = express.Router();
 
-router.post('/generate-code', validateRequestBody, generateCodeHandler);
-router.post('/validate', validateRequestBody, validateHandler);
-router.post('/validate/quick', validateRequestBody, quickValidateHandler);
+router.post("/generate-code", validateRequestBody, generateCodeHandler);
+router.post("/validate", validateRequestBody, validateHandler);
+router.post("/validate/quick", validateRequestBody, quickValidateHandler);
 
 export default router;

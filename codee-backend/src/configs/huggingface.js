@@ -1,6 +1,6 @@
-import { configs } from './env.js';
+import { configs } from "./env.js";
 
-const HF_INFERENCE_API = 'https://api-inference.huggingface.co/models';
+const HF_INFERENCE_API = "https://api-inference.huggingface.co/models";
 
 export const createModelConfig = (modelId) => ({
   apiUrl: configs.INFERENCE_API || `${HF_INFERENCE_API}/${modelId}`,
@@ -8,7 +8,7 @@ export const createModelConfig = (modelId) => ({
   modelId,
   headers: {
     Authorization: `Bearer ${configs.HF_TOKEN}`,
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   timeout: configs.REQUEST_TIMEOUT,
 });

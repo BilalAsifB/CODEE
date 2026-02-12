@@ -1,4 +1,4 @@
-import { configs } from '../configs/env.js';
+import { configs } from "../configs/env.js";
 
 export const requestLogger = (req, res, next) => {
   const startTime = Date.now();
@@ -6,7 +6,7 @@ export const requestLogger = (req, res, next) => {
   const path = req.path;
 
   // Log request
-  if (configs.LOG_LEVEL !== 'silent') {
+  if (configs.LOG_LEVEL !== "silent") {
     console.log(`[${new Date().toISOString()}] ${method} ${path}`);
   }
 
@@ -16,8 +16,10 @@ export const requestLogger = (req, res, next) => {
     const duration = Date.now() - startTime;
     const status = res.statusCode;
 
-    if (configs.LOG_LEVEL !== 'silent') {
-      console.log(`[${new Date().toISOString()}] ${method} ${path} - ${status} (${duration}ms)`);
+    if (configs.LOG_LEVEL !== "silent") {
+      console.log(
+        `[${new Date().toISOString()}] ${method} ${path} - ${status} (${duration}ms)`
+      );
     }
 
     return originalSend.call(this, data);

@@ -2,17 +2,14 @@ export const truncateText = (text, maxLength) => {
   if (text.length <= maxLength) {
     return text;
   }
-  return text.substring(0, maxLength - 3) + '...';
+  return text.substring(0, maxLength - 3) + "...";
 };
 
 export const sanitizeInput = (input) => {
-  return input
-    .trim()
-    .replace(/[<>]/g, '')
-    .slice(0, 5000);
+  return input.trim().replace(/[<>]/g, "").slice(0, 5000);
 };
 
-export const measureTime = async (fn, label = 'Operation') => {
+export const measureTime = async (fn, label = "Operation") => {
   const startTime = Date.now();
   try {
     const result = await fn();
@@ -35,9 +32,7 @@ export const retryAsync = async (fn, maxRetries = 3, delayMs = 1000) => {
     } catch (error) {
       lastError = error;
       if (i < maxRetries - 1) {
-        console.warn(
-          `Retry ${i + 1}/${maxRetries - 1} after ${delayMs}ms...`
-        );
+        console.warn(`Retry ${i + 1}/${maxRetries - 1} after ${delayMs}ms...`);
         await new Promise((resolve) => setTimeout(resolve, delayMs));
       }
     }
@@ -48,7 +43,7 @@ export const retryAsync = async (fn, maxRetries = 3, delayMs = 1000) => {
 
 export const formatErrorResponse = (error) => {
   return {
-    error: error.message || 'Unknown error',
+    error: error.message || "Unknown error",
     status: error.status || 500,
     timestamp: new Date().toISOString(),
   };

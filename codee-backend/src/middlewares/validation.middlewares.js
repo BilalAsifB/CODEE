@@ -3,20 +3,20 @@ export const validateRequestBody = (req, res, next) => {
 
   if (!prompt) {
     return res.status(400).json({
-      error: 'Prompt is required',
-      details: 'Please provide a coding-related prompt',
+      error: "Prompt is required",
+      details: "Please provide a coding-related prompt",
     });
   }
 
-  if (typeof prompt !== 'string') {
+  if (typeof prompt !== "string") {
     return res.status(400).json({
-      error: 'Prompt must be a string',
+      error: "Prompt must be a string",
     });
   }
 
   if (prompt.trim().length === 0) {
     return res.status(400).json({
-      error: 'Prompt cannot be empty',
+      error: "Prompt cannot be empty",
     });
   }
 

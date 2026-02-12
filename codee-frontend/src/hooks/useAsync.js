@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 export const useAsync = (asyncFunction, immediate = true) => {
   const [status, setStatus] = useState('idle');
@@ -22,7 +22,7 @@ export const useAsync = (asyncFunction, immediate = true) => {
     }
   }, [asyncFunction]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (immediate) {
       execute();
     }

@@ -7,26 +7,26 @@ export const INJECTION_PATTERNS = [
   /you\s+are\s+now/i,
   /new\s+role:/i,
   /act\s+as\s+(?!a\s+(?:developer|programmer|coder))/i,
-  
+
   // System prompt leaking
   /(?:show|print|display|reveal|tell)\s+(?:me\s+)?(?:your|the)\s+(?:system\s+)?(?:prompt|instructions|rules)/i,
   /what\s+(?:are|is)\s+your\s+(?:prompt|instructions|rules)/i,
   /repeat\s+your\s+instructions/i,
-  
+
   // Delimiter injection
   /```system/i,
   /<\|system\|>/i,
   /<\|endoftext\|>/i,
   /\[SYSTEM\]/i,
   /\[INST\]/i,
-  
+
   // Jailbreak attempts
   /DAN\s+mode/i,
   /developer\s+mode/i,
   /jailbreak/i,
   /override\s+(?:safety|ethics)/i,
   /bypass\s+(?:safety|filters|guardrails)/i,
-  
+
   // Encoding tricks (simple detection)
   /(?:base64|hex|unicode)\s*:/i,
   /\\x[0-9a-fA-F]{2}/,
@@ -34,12 +34,12 @@ export const INJECTION_PATTERNS = [
 ];
 
 export const ROLE_MANIPULATION_KEYWORDS = [
-  'ignore instructions',
-  'forget previous',
-  'new role',
-  'you are now',
-  'act as something',
-  'pretend to be',
+  "ignore instructions",
+  "forget previous",
+  "new role",
+  "you are now",
+  "act as something",
+  "pretend to be",
 ];
 
 export const detectPromptInjection = (text) => {
@@ -51,9 +51,9 @@ export const detectPromptInjection = (text) => {
     const match = pattern.exec(text);
     if (match) {
       detections.push({
-        type: 'pattern_match',
+        type: "pattern_match",
         matched: match[0],
-        severity: 'high',
+        severity: "high",
       });
     }
   }
@@ -62,9 +62,9 @@ export const detectPromptInjection = (text) => {
   const tripleQuotes = (text.match(/```/g) || []).length;
   if (tripleQuotes >= 4) {
     detections.push({
-      type: 'delimiter_injection',
-      matched: 'Multiple code block delimiters',
-      severity: 'medium',
+      type: "delimiter_injection",
+      matched: "Multiple code block delimiters",
+      severity: "medium",
     });
   }
 
@@ -72,21 +72,21 @@ export const detectPromptInjection = (text) => {
   const suspiciousTags = text.match(/<\|[^>]+\|>/g);
   if (suspiciousTags) {
     detections.push({
-      type: 'delimiter_injection',
-      matched: suspiciousTags.join(', '),
-      severity: 'high',
+      type: "delimiter_injection",
+      matched: suspiciousTags.join(", "),
+      severity: "high",
     });
   }
 
   // Calculate overall severity
-  const hasCritical = detections.some(d => d.severity === 'high');
+  const hasCritical = detections.some((d) => d.severity === "high");
   const score = detections.length;
 
   return {
     isInjection: detections.length > 0,
     detections,
     score,
-    severity: hasCritical ? 'high' : detections.length > 0 ? 'medium' : 'none',
+    severity: hasCritical ? "high" : detections.length > 0 ? "medium" : "none",
   };
 };
 
@@ -96,7 +96,8 @@ export const validatePromptSafety = (prompt) => {
   if (injectionResult.isInjection) {
     return {
       safe: false,
-      reason: 'Potential prompt injection detected. Please rephrase your request.',
+      reason:
+        "Potential prompt injection detected. Please rephrase your request.",
       details: injectionResult,
     };
   }

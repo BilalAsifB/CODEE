@@ -4,8 +4,8 @@ import {
   CODING_KEYWORDS,
   MIN_PROMPT_LENGTH,
   MAX_PROMPT_LENGTH,
-} from '../utils/constants.js';
-import { validatePromptSafety } from './promptInjectionDetection.js';
+} from "../utils/constants.js";
+import { validatePromptSafety } from "./promptInjectionDetection.js";
 
 export const validatePrompt = (prompt) => {
   const trimmedPrompt = prompt.trim();
@@ -15,7 +15,7 @@ export const validatePrompt = (prompt) => {
     return {
       valid: false,
       reason: `Prompt is too short. Minimum ${MIN_PROMPT_LENGTH} characters required.`,
-      type: 'length',
+      type: "length",
     };
   }
 
@@ -23,7 +23,7 @@ export const validatePrompt = (prompt) => {
     return {
       valid: false,
       reason: `Prompt is too long. Maximum ${MAX_PROMPT_LENGTH} characters allowed.`,
-      type: 'length',
+      type: "length",
     };
   }
 
@@ -33,7 +33,7 @@ export const validatePrompt = (prompt) => {
     return {
       valid: false,
       reason: injectionResult.reason,
-      type: 'injection',
+      type: "injection",
       details: injectionResult.details,
     };
   }
@@ -44,7 +44,7 @@ export const validatePrompt = (prompt) => {
     return {
       valid: false,
       reason: unsafeResult.reason,
-      type: 'unsafe',
+      type: "unsafe",
     };
   }
 
@@ -54,7 +54,7 @@ export const validatePrompt = (prompt) => {
     return {
       valid: false,
       reason: codingResult.reason,
-      type: 'relevance',
+      type: "relevance",
     };
   }
 
@@ -64,7 +64,7 @@ export const validatePrompt = (prompt) => {
     return {
       valid: false,
       reason: nonCodingResult.reason,
-      type: 'non-coding',
+      type: "non-coding",
     };
   }
 
@@ -77,13 +77,15 @@ export const quickValidatePrompt = (prompt) => {
   // Only perform lightweight checks for real-time validation
   const checks = {
     length: {
-      valid: trimmedPrompt.length >= MIN_PROMPT_LENGTH && 
-             trimmedPrompt.length <= MAX_PROMPT_LENGTH,
-      message: trimmedPrompt.length < MIN_PROMPT_LENGTH 
-        ? `${MIN_PROMPT_LENGTH - trimmedPrompt.length} more characters needed`
-        : trimmedPrompt.length > MAX_PROMPT_LENGTH
-        ? `${trimmedPrompt.length - MAX_PROMPT_LENGTH} characters over limit`
-        : 'Length OK',
+      valid:
+        trimmedPrompt.length >= MIN_PROMPT_LENGTH &&
+        trimmedPrompt.length <= MAX_PROMPT_LENGTH,
+      message:
+        trimmedPrompt.length < MIN_PROMPT_LENGTH
+          ? `${MIN_PROMPT_LENGTH - trimmedPrompt.length} more characters needed`
+          : trimmedPrompt.length > MAX_PROMPT_LENGTH
+            ? `${trimmedPrompt.length - MAX_PROMPT_LENGTH} characters over limit`
+            : "Length OK",
     },
     injection: validatePromptSafety(trimmedPrompt),
   };
@@ -93,9 +95,9 @@ export const quickValidatePrompt = (prompt) => {
   return {
     valid: allValid,
     checks,
-    suggestion: !allValid 
-      ? 'Fix the issues highlighted before generating code'
-      : 'Ready to generate',
+    suggestion: !allValid
+      ? "Fix the issues highlighted before generating code"
+      : "Ready to generate",
   };
 };
 
@@ -123,7 +125,8 @@ export const checkCodingRelevance = (text) => {
   if (!hasCodingKeyword) {
     return {
       relevant: false,
-      reason: 'Your request does not appear to be coding-related. Please ask for help with programming, scripting, or development tasks.',
+      reason:
+        "Your request does not appear to be coding-related. Please ask for help with programming, scripting, or development tasks.",
     };
   }
 
@@ -137,7 +140,8 @@ export const checkNonCodingContent = (text) => {
     if (lowerText.includes(keyword)) {
       return {
         allowed: false,
-        reason: 'Your request appears to be for non-coding content. Please focus on programming questions.',
+        reason:
+          "Your request appears to be for non-coding content. Please focus on programming questions.",
       };
     }
   }
