@@ -1,27 +1,24 @@
 import axios from 'axios';
-import { huggingfaceConfig } from '../configs/huggingface.js';
+import { createModelConfig } from '../configs/huggingface.js';
 
-export const callHuggingFaceAPI = async (inputs, params = {}) => {
-  let url;
-  if (huggingfaceConfig.apiUrl.includes('api-inference.huggingface.co')) {
-    url = `${huggingfaceConfig.apiUrl}/${huggingfaceConfig.modelId}`;
-  } else {
-    url = huggingfaceConfig.apiUrl;
-  }
-  console.log('🔗 Calling HF API URL:', url);
+export const callHuggingFaceAPI = async (inputs, params = {}, modelId) => {
+  const config = createModelConfig(modelId);
+  
+  const url = config.apiUrl.includes('api-inference.huggingface.co')
+    ? config.apiUrl
+    : `https://api-inference.huggingface.co/models/${modelId}`;
+  
+  console.log('🔗 Calling HF API:', { model: modelId, url });
 
   const requestBody = {
     inputs,
-    parameters: {
-      ...huggingfaceConfig.generationParams,
-      ...params,
-    },
+    parameters: params,
   };
 
   try {
     const response = await axios.post(url, requestBody, {
-      headers: huggingfaceConfig.headers,
-      timeout: huggingfaceConfig.timeout,
+      headers: config.headers,
+      timeout: config.timeout,
     });
 
     if (!response.data || !response.data[0]) {
@@ -32,6 +29,9 @@ export const callHuggingFaceAPI = async (inputs, params = {}) => {
   } catch (error) {
     if (error.response?.status === 429) {
       throw new Error('Rate limited by Hugging Face API. Please try again later.');
+    }
+    if (error.response?.status === 503) {
+      throw new Error('Model is loading. Please wait and try again in 20-30 seconds.');
     }
     if (error.code === 'ECONNABORTED') {
       throw new Error('Request timeout. Model may be loading. Please try again.');

@@ -1,4 +1,4 @@
-import { validatePrompt } from '../services/guardrails.js';
+import { validatePrompt, quickValidatePrompt } from '../services/guardrails.js';
 import { generateCode } from '../services/generationService.js';
 import { improveCode } from '../services/criticService.js';
 
@@ -11,6 +11,7 @@ export const generateCodeHandler = async (req, res) => {
     if (!validation.valid) {
       return res.status(400).json({
         error: validation.reason,
+        type: validation.type,
       });
     }
 
@@ -44,6 +45,7 @@ export const validateHandler = async (req, res) => {
       return res.status(400).json({
         valid: false,
         reason: validation.reason,
+        type: validation.type,
       });
     }
 
@@ -53,6 +55,27 @@ export const validateHandler = async (req, res) => {
     });
   } catch (error) {
     console.error('Validation error:', error.message);
+    res.status(500).json({
+      error: error.message || 'Validation failed',
+    });
+  }
+};
+
+export const quickValidateHandler = async (req, res) => {
+  const { prompt } = req.body;
+
+  try {
+    if (!prompt) {
+      return res.status(400).json({
+        error: 'Prompt is required',
+      });
+    }
+
+    const validation = quickValidatePrompt(prompt);
+
+    res.status(200).json(validation);
+  } catch (error) {
+    console.error('Quick validation error:', error.message);
     res.status(500).json({
       error: error.message || 'Validation failed',
     });

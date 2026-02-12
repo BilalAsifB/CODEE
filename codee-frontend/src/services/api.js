@@ -46,6 +46,63 @@ export const validatePrompt = async (prompt) => {
   }
 };
 
+export const quickValidatePrompt = async (prompt) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/validate/quick`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ prompt }),
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return { valid: false, error: error.message };
+  }
+};
+
+export const getModels = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/models/list`, {
+      method: 'GET',
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch models');
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error(error.message || 'Failed to fetch models');
+  }
+};
+
+export const selectModel = async (modelType) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/models/select`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ modelType }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to select model');
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error(error.message || 'Model selection failed');
+  }
+};
+
 export const healthCheck = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/health`, {

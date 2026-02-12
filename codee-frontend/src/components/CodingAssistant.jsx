@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Send, Loader, AlertCircle, CheckCircle, Copy, Check } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import InputForm from './InputForm';
 import CodeDisplay from './CodeDisplay';
 import StatusIndicator from './StatusIndicator';
 import ErrorMessage from './ErrorMessage';
+import ModelSelector from './ModelSelector';
 import { generateCode } from '../services/api';
+import { useValidation } from '../hooks/useValidation';
 import '../styles/CodingAssistant.css';
 
 export default function CodingAssistant() {
@@ -13,9 +15,12 @@ export default function CodingAssistant() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
   const [stage, setStage] = useState('');
+  const { validationResult, isValidating } = useValidation(prompt, 500);
 
   const handleSubmit = async () => {
-    if (!prompt.trim()) return;
+    if (!prompt.trim() || (validationResult && !validationResult.valid)) {
+      return;
+    }
 
     setLoading(true);
     setError('');
@@ -46,11 +51,14 @@ export default function CodingAssistant() {
       <div className="coding-assistant-wrapper">
         {/* Header */}
         <div className="assistant-header">
-          <h1 className="assistant-title">AI Coding Assistant</h1>
+          <h1 className="assistant-title">CODEE</h1>
           <p className="assistant-subtitle">
-            Powered by Qwen 2.5 3B Coder with Safety Guardrails
+            AI Coding Assistant • Powered by Qwen 2.5 Coder
           </p>
         </div>
+
+        {/* Model Selector */}
+        <ModelSelector />
 
         {/* Main Content */}
         <div className="assistant-content">
@@ -61,6 +69,8 @@ export default function CodingAssistant() {
             onSubmit={handleSubmit}
             onKeyDown={handleKeyDown}
             loading={loading}
+            validationResult={validationResult}
+            isValidating={isValidating}
           />
 
           {/* Status Messages */}
