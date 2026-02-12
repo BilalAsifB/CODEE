@@ -1,5 +1,9 @@
 # CODEE — AI Coding Assistant
 
+[![CI](https://github.com/BilalAsifB/CODEE/actions/workflows/ci.yml/badge.svg)](https://github.com/BilalAsifB/CODEE/actions/workflows/ci.yml)
+[![Backend CI](https://github.com/BilalAsifB/CODEE/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/BilalAsifB/CODEE/actions/workflows/backend-ci.yml)
+[![Frontend CI](https://github.com/BilalAsifB/CODEE/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/BilalAsifB/CODEE/actions/workflows/frontend-ci.yml)
+
 CODEE is a full-stack **AI coding assistant** built with:
 
 * **Qwen 2.5 (0.5B & 3B) fine-tuned models**
@@ -192,6 +196,41 @@ Example Docker run:
 docker build -f docker/Dockerfile.backend -t coding-assistant-backend .
 docker run -p 5000:5000 -e HUGGING_FACE_TOKEN=your_token coding-assistant-backend
 ```
+
+---
+
+# 🧪 Testing
+
+This project includes comprehensive test suites for both frontend and backend.
+
+### Backend Tests
+
+```bash
+cd codee-backend
+npm test              # Run all tests
+npm run test:coverage # Run with coverage
+npm run test:watch    # Watch mode
+```
+
+**Note:** Backend tests require a `.env.test` file. Copy from `.env.example` and set `HUGGING_FACE_TOKEN`.
+
+### Frontend Tests
+
+```bash
+cd codee-frontend
+npm test              # Interactive mode
+npm test -- --coverage --watchAll=false  # CI mode with coverage
+```
+
+### CI/CD
+
+All tests run automatically on every push and pull request via GitHub Actions:
+- **Backend CI**: Jest tests with ES modules, Prettier formatting checks, coverage reports
+- **Frontend CI**: React Testing Library tests, ESLint checks, build verification, coverage reports  
+- **Unified CI**: Runs both in parallel with status checks
+
+**Required GitHub Secret:**
+- `HUGGING_FACE_TOKEN` - Add this to your repository secrets for backend tests to pass
 
 ---
 
