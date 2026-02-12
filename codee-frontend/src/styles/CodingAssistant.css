@@ -1,7 +1,7 @@
 .coding-assistant-container {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  background: #e0e5ec;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,86 +11,91 @@
 .coding-assistant-wrapper {
   width: 100%;
   max-width: 1200px;
-  background: rgba(30, 41, 59, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #e0e5ec;
+  border-radius: 24px;
   padding: 40px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 20px 20px 60px rgba(163, 177, 198, 0.5),
+              -20px -20px 60px rgba(255, 255, 255, 0.8);
 }
 
 .assistant-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 }
 
 .assistant-title {
-  font-size: 36px;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 10px;
-  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 48px;
+  font-weight: 800;
+  color: #2d3e50;
+  margin-bottom: 8px;
+  letter-spacing: -1px;
+  text-shadow: 2px 2px 4px rgba(163, 177, 198, 0.3),
+               -2px -2px 4px rgba(255, 255, 255, 0.8);
 }
 
 .assistant-subtitle {
-  font-size: 16px;
-  color: #94a3b8;
+  font-size: 15px;
+  color: #6b7a90;
+  font-weight: 500;
 }
 
 .assistant-content {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
 }
 
 .results-container {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  margin-top: 8px;
 }
 
 .improvements-section {
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
-  border: 1px solid rgba(34, 197, 94, 0.2);
-  border-radius: 12px;
-  padding: 20px;
+  background: #e0e5ec;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: inset 6px 6px 12px rgba(163, 177, 198, 0.4),
+              inset -6px -6px 12px rgba(255, 255, 255, 0.6);
 }
 
 .improvements-title {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #86efac;
+  color: #22c55e;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 12px;
+  text-shadow: 1px 1px 2px rgba(34, 197, 94, 0.2);
 }
 
 .improvements-icon {
   width: 20px;
   height: 20px;
   color: #22c55e;
+  filter: drop-shadow(0 2px 4px rgba(34, 197, 94, 0.3));
 }
 
 .improvements-text {
-  color: #cbd5e1;
+  color: #5a6c7d;
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 @media (max-width: 768px) {
   .coding-assistant-wrapper {
-    padding: 20px;
+    padding: 24px;
+    box-shadow: 12px 12px 40px rgba(163, 177, 198, 0.5),
+                -12px -12px 40px rgba(255, 255, 255, 0.8);
   }
 
   .assistant-title {
-    font-size: 28px;
+    font-size: 36px;
   }
 
   .assistant-subtitle {
-    font-size: 14px;
+    font-size: 13px;
   }
 }

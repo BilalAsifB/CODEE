@@ -1,17 +1,18 @@
 import { callHuggingFaceAPI, parseModelResponse } from './modelService.js';
 import { formatCriticPrompt, extractImprovementsFromResponse } from '../utils/prompts.js';
-import { huggingfaceConfig } from '../configs/huggingface.js';
+import { getCriticModel } from './modelRegistry.js';
+import { criticParams } from '../configs/huggingface.js';
 
 export const improveCode = async (code, originalPrompt) => {
   try {
+    const model = getCriticModel();
+    console.log(`🔍 Using ${model.name} for code improvement`);
+    
     // Format prompt for critic
     const criticPrompt = formatCriticPrompt(code, originalPrompt);
 
     // Call model with critic parameters
-    const response = await callHuggingFaceAPI(
-      criticPrompt,
-      huggingfaceConfig.criticParams
-    );
+    const response = await callHuggingFaceAPI(criticPrompt, criticParams, model.id);
 
     // Parse response
     const improvedText = parseModelResponse(response);

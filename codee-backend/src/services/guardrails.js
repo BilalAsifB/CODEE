@@ -5,6 +5,7 @@ import {
   MIN_PROMPT_LENGTH,
   MAX_PROMPT_LENGTH,
 } from '../utils/constants.js';
+import { validatePromptSafety } from './promptInjectionDetection.js';
 
 export const validatePrompt = (prompt) => {
   const trimmedPrompt = prompt.trim();
@@ -14,6 +15,7 @@ export const validatePrompt = (prompt) => {
     return {
       valid: false,
       reason: `Prompt is too short. Minimum ${MIN_PROMPT_LENGTH} characters required.`,
+      type: 'length',
     };
   }
 
@@ -21,37 +23,80 @@ export const validatePrompt = (prompt) => {
     return {
       valid: false,
       reason: `Prompt is too long. Maximum ${MAX_PROMPT_LENGTH} characters allowed.`,
+      type: 'length',
     };
   }
 
-  // Check 2: Unsafe content
+  // Check 2: Prompt injection detection
+  const injectionResult = validatePromptSafety(trimmedPrompt);
+  if (!injectionResult.safe) {
+    return {
+      valid: false,
+      reason: injectionResult.reason,
+      type: 'injection',
+      details: injectionResult.details,
+    };
+  }
+
+  // Check 3: Unsafe content
   const unsafeResult = checkUnsafeKeywords(trimmedPrompt);
   if (!unsafeResult.safe) {
     return {
       valid: false,
       reason: unsafeResult.reason,
+      type: 'unsafe',
     };
   }
 
-  // Check 3: Coding relevance
+  // Check 4: Coding relevance
   const codingResult = checkCodingRelevance(trimmedPrompt);
   if (!codingResult.relevant) {
     return {
       valid: false,
       reason: codingResult.reason,
+      type: 'relevance',
     };
   }
 
-  // Check 4: Non-coding content
+  // Check 5: Non-coding content
   const nonCodingResult = checkNonCodingContent(trimmedPrompt);
   if (!nonCodingResult.allowed) {
     return {
       valid: false,
       reason: nonCodingResult.reason,
+      type: 'non-coding',
     };
   }
 
   return { valid: true };
+};
+
+export const quickValidatePrompt = (prompt) => {
+  const trimmedPrompt = prompt.trim();
+
+  // Only perform lightweight checks for real-time validation
+  const checks = {
+    length: {
+      valid: trimmedPrompt.length >= MIN_PROMPT_LENGTH && 
+             trimmedPrompt.length <= MAX_PROMPT_LENGTH,
+      message: trimmedPrompt.length < MIN_PROMPT_LENGTH 
+        ? `${MIN_PROMPT_LENGTH - trimmedPrompt.length} more characters needed`
+        : trimmedPrompt.length > MAX_PROMPT_LENGTH
+        ? `${trimmedPrompt.length - MAX_PROMPT_LENGTH} characters over limit`
+        : 'Length OK',
+    },
+    injection: validatePromptSafety(trimmedPrompt),
+  };
+
+  const allValid = checks.length.valid && checks.injection.safe;
+
+  return {
+    valid: allValid,
+    checks,
+    suggestion: !allValid 
+      ? 'Fix the issues highlighted before generating code'
+      : 'Ready to generate',
+  };
 };
 
 export const checkUnsafeKeywords = (text) => {

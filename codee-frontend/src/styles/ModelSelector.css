@@ -1,0 +1,70 @@
+.model-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.model-selector-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #5a6c7d;
+}
+
+.model-toggle {
+  display: flex;
+  gap: 8px;
+  background: #e0e5ec;
+  padding: 4px;
+  border-radius: 12px;
+  box-shadow: inset 3px 3px 6px rgba(163, 177, 198, 0.6),
+              inset -3px -3px 6px rgba(255, 255, 255, 0.5);
+}
+
+.model-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #6b7a90;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.model-option:hover {
+  color: #4a5f7f;
+}
+
+.model-option.active {
+  background: #e0e5ec;
+  color: #2d3e50;
+  box-shadow: 5px 5px 10px rgba(163, 177, 198, 0.8),
+              -5px -5px 10px rgba(255, 255, 255, 0.9);
+}
+
+.model-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: linear-gradient(145deg, #d4dae6, #e8edf5);
+  color: #5a6c7d;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.model-option.active .model-badge {
+  background: linear-gradient(145deg, #4caf50, #66bb6a);
+  color: white;
+}
+
+.model-option svg {
+  width: 16px;
+  height: 16px;
+}

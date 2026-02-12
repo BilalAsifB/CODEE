@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import codeRoutes from './routes/codeRoutes.routers.js';
+import modelRoutes from './routes/modelRoutes.routers.js';
+import cacheRoutes from './routes/cacheRoutes.routers.js';
 import { errorHandler } from './middlewares/errorHandler.middlewares.js';
 import { requestLogger } from './middlewares/logger.middlewares.js';
 import { configs } from './configs/env.js';
@@ -17,6 +19,8 @@ app.use(requestLogger);
 
 // Routes
 app.use('/api', codeRoutes);
+app.use('/api/models', modelRoutes);
+app.use('/api/cache', cacheRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
@@ -40,6 +44,7 @@ const PORT = configs.PORT;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
   console.log(`📝 Environment: ${configs.NODE_ENV}`);
+  console.log(`💾 Cache: ${configs.CACHE_ENABLED ? 'ENABLED' : 'DISABLED'}`);
 });
 
 export default app;
