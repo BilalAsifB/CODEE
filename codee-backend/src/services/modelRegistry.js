@@ -1,26 +1,26 @@
-import { configs } from '../configs/env.js';
+import { configs } from "../configs/env.js";
 
 export const MODEL_TYPES = {
-  SMALL: '0.5B',
-  LARGE: '3B',
+  SMALL: "0.5B",
+  LARGE: "3B",
 };
 
 export const MODEL_REGISTRY = {
   [MODEL_TYPES.SMALL]: {
     id: configs.MODEL_ID_0_5B,
-    name: 'Qwen 2.5 0.5B Coder',
-    size: '0.5B',
-    description: 'Fast and efficient for quick code generation',
-    recommendedFor: 'generation',
-    avgLatency: '2s',
+    name: "Qwen 2.5 0.5B Coder",
+    size: "0.5B",
+    description: "Fast and efficient for quick code generation",
+    recommendedFor: "generation",
+    avgLatency: "2s",
   },
   [MODEL_TYPES.LARGE]: {
     id: configs.MODEL_ID_3B,
-    name: 'Qwen 2.5 3B Coder',
-    size: '3B',
-    description: 'Higher quality code with better reasoning',
-    recommendedFor: 'critic',
-    avgLatency: '4s',
+    name: "Qwen 2.5 3B Coder",
+    size: "3B",
+    description: "Higher quality code with better reasoning",
+    recommendedFor: "critic",
+    avgLatency: "4s",
   },
 };
 
@@ -35,8 +35,8 @@ export const getModelById = (modelType) => {
 };
 
 export const getGenerationModel = () => {
-  return userSelectedModel 
-    ? MODEL_REGISTRY[userSelectedModel] 
+  return userSelectedModel
+    ? MODEL_REGISTRY[userSelectedModel]
     : MODEL_REGISTRY[DEFAULT_GENERATION_MODEL];
 };
 

@@ -1,6 +1,6 @@
-import { validatePrompt, quickValidatePrompt } from '../services/guardrails.js';
-import { generateCode } from '../services/generationService.js';
-import { improveCode } from '../services/criticService.js';
+import { validatePrompt, quickValidatePrompt } from "../services/guardrails.js";
+import { generateCode } from "../services/generationService.js";
+import { improveCode } from "../services/criticService.js";
 
 export const generateCodeHandler = async (req, res) => {
   const { prompt } = req.body;
@@ -28,9 +28,9 @@ export const generateCodeHandler = async (req, res) => {
       improvements: improvementResult.improvements,
     });
   } catch (error) {
-    console.error('Code generation error:', error.message);
+    console.error("Code generation error:", error.message);
     res.status(500).json({
-      error: error.message || 'Failed to generate code',
+      error: error.message || "Failed to generate code",
     });
   }
 };
@@ -51,12 +51,12 @@ export const validateHandler = async (req, res) => {
 
     res.status(200).json({
       valid: true,
-      message: 'Prompt is valid and safe for code generation',
+      message: "Prompt is valid and safe for code generation",
     });
   } catch (error) {
-    console.error('Validation error:', error.message);
+    console.error("Validation error:", error.message);
     res.status(500).json({
-      error: error.message || 'Validation failed',
+      error: error.message || "Validation failed",
     });
   }
 };
@@ -67,7 +67,7 @@ export const quickValidateHandler = async (req, res) => {
   try {
     if (!prompt) {
       return res.status(400).json({
-        error: 'Prompt is required',
+        error: "Prompt is required",
       });
     }
 
@@ -75,9 +75,9 @@ export const quickValidateHandler = async (req, res) => {
 
     res.status(200).json(validation);
   } catch (error) {
-    console.error('Quick validation error:', error.message);
+    console.error("Quick validation error:", error.message);
     res.status(500).json({
-      error: error.message || 'Validation failed',
+      error: error.message || "Validation failed",
     });
   }
 };

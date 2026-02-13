@@ -1,10 +1,15 @@
-import { getAllModels, setUserModel, getUserModel, MODEL_TYPES } from '../services/modelRegistry.js';
+import {
+  getAllModels,
+  setUserModel,
+  getUserModel,
+  MODEL_TYPES,
+} from "../services/modelRegistry.js";
 
 export const getModelsHandler = async (req, res) => {
   try {
     const models = getAllModels();
     const currentModel = getUserModel();
-    
+
     res.status(200).json({
       models,
       current: currentModel,
@@ -14,8 +19,8 @@ export const getModelsHandler = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Get models error:', error.message);
-    res.status(500).json({ error: 'Failed to retrieve models' });
+    console.error("Get models error:", error.message);
+    res.status(500).json({ error: "Failed to retrieve models" });
   }
 };
 
@@ -24,17 +29,17 @@ export const selectModelHandler = async (req, res) => {
 
   try {
     if (!modelType) {
-      return res.status(400).json({ error: 'modelType is required' });
+      return res.status(400).json({ error: "modelType is required" });
     }
 
     const selectedModel = setUserModel(modelType);
-    
+
     res.status(200).json({
-      message: 'Model selected successfully',
+      message: "Model selected successfully",
       model: selectedModel,
     });
   } catch (error) {
-    console.error('Model selection error:', error.message);
+    console.error("Model selection error:", error.message);
     res.status(400).json({ error: error.message });
   }
 };

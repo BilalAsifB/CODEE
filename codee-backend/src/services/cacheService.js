@@ -1,6 +1,6 @@
-import NodeCache from 'node-cache';
-import crypto from 'crypto';
-import { configs } from '../configs/env.js';
+import NodeCache from "node-cache";
+import crypto from "crypto";
+import { configs } from "../configs/env.js";
 
 // Create cache instance
 const cache = new NodeCache({
@@ -18,7 +18,7 @@ let cacheStats = {
 
 export const generateCacheKey = (prompt, modelId) => {
   const data = `${prompt}:${modelId}`;
-  return crypto.createHash('sha256').update(data).digest('hex');
+  return crypto.createHash("sha256").update(data).digest("hex");
 };
 
 export const getCachedResponse = (prompt, modelId) => {
@@ -54,7 +54,7 @@ export const setCachedResponse = (prompt, modelId, response) => {
 export const clearCache = () => {
   cache.flushAll();
   cacheStats = { hits: 0, misses: 0, sets: 0 };
-  console.log('🗑️  Cache cleared');
+  console.log("🗑️  Cache cleared");
 };
 
 export const getCacheStats = () => {
