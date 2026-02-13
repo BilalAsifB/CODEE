@@ -14,6 +14,7 @@ export const configs = {
 };
 
 // Validate required config
-if (!configs.HF_TOKEN) {
+// Allow missing token in test environment for unit tests that don't need it
+if (!configs.HF_TOKEN && configs.NODE_ENV !== "test") {
   throw new Error("HUGGING_FACE_TOKEN environment variable is required");
 }
